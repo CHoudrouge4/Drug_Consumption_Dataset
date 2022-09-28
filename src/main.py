@@ -8,6 +8,9 @@ from sklearn import tree
 from sklearn.metrics import accuracy_score
 from sklearn.ensemble import RandomForestClassifier
 from sklearn import svm
+from sklearn.metrics import confusion_matrix
+from sklearn import metrics
+import matplotlib.pyplot as plt
 
 def get_data():
     file_name = './data/drug_consumption.data'
@@ -103,17 +106,44 @@ clf = clf.fit(X_train, y_train)
 X_result = clf.predict(X_test)
 #print(X_result)
 print(accuracy_score(y_test, X_result))
+print(confusion_matrix(y_test, X_result))
+x, y = prepare_targets(y_test, X_result)
+fpr, tpr, thresholds = metrics.roc_curve(x, y)
+roc_auc = metrics.auc(fpr, tpr)
+display = metrics.RocCurveDisplay(fpr=fpr, tpr=tpr, roc_auc=roc_auc, estimator_name='example estimator')
+display.plot()
+plt.show()
+
 
 # random forest
 clf = RandomForestClassifier(random_state=0)
 clf.fit(X_train, y_train)
 X_result = clf.predict(X_test)
 print(accuracy_score(y_test, X_result))
+print(confusion_matrix(y_test, X_result))
+
+x, y = prepare_targets(y_test, X_result)
+fpr, tpr, thresholds = metrics.roc_curve(x, y)
+roc_auc = metrics.auc(fpr, tpr)
+display = metrics.RocCurveDisplay(fpr=fpr, tpr=tpr, roc_auc=roc_auc, estimator_name='example estimator')
+display.plot()
+plt.show()
+
+
 
 clf = svm.SVC()
 clf.fit(X_train, y_train)
 X_result = clf.predict(X_test)
 print(accuracy_score(y_test, X_result))
+print(confusion_matrix(y_test, X_result))
+x, y = prepare_targets(y_test, X_result)
+fpr, tpr, thresholds = metrics.roc_curve(x, y)
+roc_auc = metrics.auc(fpr, tpr)
+display = metrics.RocCurveDisplay(fpr=fpr, tpr=tpr, roc_auc=roc_auc, estimator_name='example estimator')
+display.plot()
+plt.show()
+
+
 
 
 from sklearn.neighbors import KNeighborsClassifier
@@ -121,3 +151,12 @@ clf = KNeighborsClassifier(n_neighbors=5)
 clf.fit(X_train, y_train)
 X_result = clf.predict(X_test)
 print(accuracy_score(y_test, X_result))
+
+
+print(confusion_matrix(y_test, X_result))
+x, y = prepare_targets(y_test, X_result)
+fpr, tpr, thresholds = metrics.roc_curve(x, y)
+roc_auc = metrics.auc(fpr, tpr)
+display = metrics.RocCurveDisplay(fpr=fpr, tpr=tpr, roc_auc=roc_auc, estimator_name='example estimator')
+display.plot()
+plt.show()
