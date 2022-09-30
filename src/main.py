@@ -5,12 +5,14 @@ from matplotlib import pyplot
 from preprocessing import *
 from models import *
 
-def draw_roc(x, y):
-    fpr, tpr, thresholds = metrics.roc_curve(y, x)
-    roc_auc = metrics.auc(fpr, tpr)
-    display = metrics.RocCurveDisplay(fpr=fpr, tpr=tpr, roc_auc=roc_auc, estimator_name='example estimator')
-    display.plot()
-    plt.show()
+def draw_roc(X_result, y_test, name):
+    fpr, tpr, thresholds = metrics.roc_curve(y_test, X_result)
+    #roc_auc = metrics.auc(fpr, tpr)
+    auc = round(metrics.roc_auc_score(y_test, X_result), 4)
+    #display = metrics.RocCurveDisplay(fpr=fpr, tpr=tpr, roc_auc=roc_auc, estimator_name='example estimator')
+    #display.plot()
+    plt.plot(fpr,tpr,label= name + ", AUC="+str(auc))
+
 
 #X stands for the features, class_c stands for the label class
 def experiment(X, labels):
@@ -21,23 +23,26 @@ def experiment(X, labels):
 
     models = [model_DT, model_RF, model_SVM, model_KNN]
     for m in models:
-        X_result = m(X_train_fs, X_test_fs, y_train_enc, y_test_enc)
+        X_result, name = m(X_train_fs, X_test_fs, y_train_enc, y_test_enc)
         print(confusion_matrix(y_test_enc, X_result))
-        draw_roc(X_result, y_test_enc)
+        draw_roc(X_result, y_test_enc, name)
 
+    plt.legend()
+    plt.show()
 # I will split the data into data and labels
 def main():
     file_name = './data/drug_consumption.data'
     print("Getting Data ...")
     data = get_data(file_name)
     print(data.shape)
-    classes = [31, 30]
+    classes = [31, 30, 29, 28, 27, 26]
     for c in classes:
         convert_to_binary_class(data, c)
 
     X = data[:, 1:13]    # getting the features
-    labels = data[:, 31] #getting class label
-    experiment(X, labels)
+    for c in classes:
+        labels = data[:, c] #getting class label
+        experiment(X, labels)
 
 if __name__ == "__main__":
     main()
