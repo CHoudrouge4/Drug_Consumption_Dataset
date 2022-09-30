@@ -29,13 +29,14 @@ def experiment(X, labels):
 
     plt.legend()
     plt.show()
+
 # I will split the data into data and labels
 def main():
     file_name = './data/drug_consumption.data'
     print("Getting Data ...")
     data = get_data(file_name)
     print(data.shape)
-    classes = [31, 30, 29, 28, 27, 26]
+    classes = [31, 28, 24, 20, 16, 29]
     for c in classes:
         convert_to_binary_class(data, c)
 
@@ -46,17 +47,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-#from sklearn import svm
-
-# clf = svm.SVC()
-# clf.fit(X_train, y_train)
-# X_result = clf.predict(X_test)
-# print(accuracy_score(y_test, X_result))
-# print(confusion_matrix(y_test, X_result))
-# x, y = prepare_targets(y_test, X_result)
-# fpr, tpr, thresholds = metrics.roc_curve(x, y)
-# roc_auc = metrics.auc(fpr, tpr)
-# display = metrics.RocCurveDisplay(fpr=fpr, tpr=tpr, roc_auc=roc_auc, estimator_name='example estimator')
-# plt.show()
-# display.plot()

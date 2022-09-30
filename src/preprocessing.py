@@ -1,8 +1,7 @@
 import pandas as pd
 from matplotlib import pyplot
 from sklearn.preprocessing import LabelEncoder
-from sklearn.feature_selection import SelectKBest
-from sklearn.feature_selection import f_classif
+from sklearn.feature_selection import SelectKBest, f_classif, chi2, mutual_info_classif, SelectFpr, GenericUnivariateSelect
 
 def get_data(file_name):
     # Read the file in pandas data frame
@@ -22,11 +21,12 @@ def convert_to_binary_class(data, c):
             data[i][c] = 'nonuser'
 
 def prepare_targets(y_train, y_test):
-	le = LabelEncoder()
-	le.fit(y_train)
-	y_train_enc = le.transform(y_train)
-	y_test_enc = le.transform(y_test)
-	return y_train_enc, y_test_enc
+    le = LabelEncoder()
+    le.fit(y_train)
+    y_train_enc = le.transform(y_train)
+    y_test_enc = le.transform(y_test)
+    print(le.classes_)
+    return y_train_enc, y_test_enc
 
 def feature_selection(X_train, X_test, y_train, y_test):
     fs = SelectKBest(score_func=f_classif, k=5)
