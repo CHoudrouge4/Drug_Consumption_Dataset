@@ -29,7 +29,7 @@ def compute_recalls_precisions(cm):
 def display_stat_latex_table(l):
     tex = '\\begin{table}[!h]\n'
     tex += '\\begin{tabular}{l | l | l| l| l | l}\n'
-    tex += ' & Sensitivity & Specific & False Positive Rate & False Negative Rate & Precision \\\\\\hline\n'
+    tex += 'Model & Sensitivity & Specific & False Positive Rate & False Negative Rate & Precision \\\\\\hline\n'
     models = ['DT', 'RF', 'SVM', 'KNN']
     for i in range(4):
         tex +=  models[i] + ' & ' + str(round(l[i][0], 4)) + ' & ' + str(round(l[i][1], 4)) + ' & ' + str(round(l[i][2], 4)) + ' & ' + str(round(l[i][3], 4)) + ' & ' + str(round(l[i][4], 4)) + '\\\\\n'
@@ -71,4 +71,4 @@ def get_tex_file(l, i):
 def get_stat_tex(l, i):
     tex = display_stat_latex_table(l)
     with open('stat_table' + str(i)+ '.tex', 'w') as f:
-        f.write(tex)8221
+        f.write(tex)
