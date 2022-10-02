@@ -25,7 +25,7 @@ def prepare_targets(y_train, y_test):
     le.fit(y_train)
     y_train_enc = le.transform(y_train)
     y_test_enc = le.transform(y_test)
-    print(le.classes_)
+    #print(le.classes_)
     return y_train_enc, y_test_enc
 
 def feature_selection(X_train, X_test, y_train, y_test):

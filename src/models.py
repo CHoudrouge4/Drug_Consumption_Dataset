@@ -9,8 +9,9 @@ from sklearn.neighbors import KNeighborsClassifier
 def model_exec(clf, X_train_fs, X_test_fs, y_train, y_test):
     clf = clf.fit(X_train_fs, y_train) #fitting the training data
     X_result = clf.predict(X_test_fs)  # testing
-    print(accuracy_score(y_test, X_result))
-    return X_result
+    X_proba = clf.predict_proba(X_test_fs)
+    #print(accuracy_score(y_test, X_result))
+    return X_result, X_proba[:,1]
 
 def model_DT (X_train_fs, X_test_fs, y_train, y_test):
     clf = tree.DecisionTreeClassifier() #creating the model
@@ -22,6 +23,7 @@ def model_RF(X_train_fs, X_test_fs, y_train, y_test):
 
 def model_SVM(X_train_fs, X_test_fs, y_train, y_test):
     clf = svm.SVC()
+    clf=svm.SVC(probability=True)
     return model_exec(clf, X_train_fs, X_test_fs, y_train, y_test), 'SVM'
 
 def model_KNN (X_train_fs, X_test_fs, y_train, y_test):
