@@ -14,6 +14,7 @@ def draw_roc(X_result, y_test, name):
     auc = round(metrics.roc_auc_score(y_test, X_result), 5)
     plt.plot(fpr, tpr,label= name + ", AUC="+str(auc))
 
+# Function to produce the roc curve based on proba
 def draw_roc1(X_test, y_test, proba, name):
     fpr, tpr, thresholds = metrics.roc_curve(y_test, proba)
     #print(fpr)
@@ -22,7 +23,8 @@ def draw_roc1(X_test, y_test, proba, name):
     plt.plot(fpr, tpr,label= name + ", AUC="+str(auc))
 
 
-#X stands for the features, class_c stands for the label class
+#X stands for the features, labes for the class in question and i is for the drug number
+# the function perform training and classication for a test and training data.
 def experiment(X, labels, i):
     X_train, X_test, y_train, y_test = train_test_split(X, labels, test_size=0.33, random_state=1)
     y_train_enc, y_test_enc = prepare_targets(y_train, y_test)
@@ -47,7 +49,7 @@ def experiment(X, labels, i):
     plt.legend()
     plt.show()
 
-# I will split the data into data and labels
+# perform the experiments for each drug.
 def main():
     file_name = './data/drug_consumption.data'
     print("Getting Data ...")
