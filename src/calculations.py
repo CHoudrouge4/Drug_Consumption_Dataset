@@ -24,12 +24,12 @@ def compute_recalls_precisions(cm):
     TN = cm[1, 1]
     Pos = TP + FN
     Neg = FP + TN
-    return [sensitivity(TP, Pos), specificity(TN, Neg), false_pos_rate(FP, Neg), false_neg_rate(FN, Neg), precision(TP, FP)]
+    return [sensitivity(TP, Pos), specificity(TN, Neg), false_pos_rate(FP, Neg), false_neg_rate(FN, Pos), precision(TP, FP)]
 
 def display_stat_latex_table(l):
     tex = '\\begin{table}[!h]\n'
     tex += '\\begin{tabular}{l | l | l| l| l | l}\n'
-    tex += 'Model & Sensitivity & Specific & False Positive Rate & False Negative Rate & Precision \\\\\\hline\n'
+    tex += 'Model & Sensitivity & Specificity & False Positive Rate & False Negative Rate & Precision \\\\\\hline\n'
     models = ['DT', 'RF', 'SVM', 'KNN']
     for i in range(4):
         tex +=  models[i] + ' & ' + str(round(l[i][0], 4)) + ' & ' + str(round(l[i][1], 4)) + ' & ' + str(round(l[i][2], 4)) + ' & ' + str(round(l[i][3], 4)) + ' & ' + str(round(l[i][4], 4)) + '\\\\\n'
@@ -41,7 +41,7 @@ def display_stat_latex_table(l):
 
 def cm_to_latex(cm):
     tex = '\\begin{tabular}{l | l | l| l}\n'
-    tex +='                   & Predict $\oplus$ & Predict $\circleddash$ & \\\\hline\n'
+    tex +='                   & Predict $\oplus$ & Predict $\circleddash$ & \\\\\\hline\n'
     tex +='Actual $\oplus$ &' + str(cm[0][0]) + '&' + str(cm[0][1]) + '&' + str(cm[0][0] + cm[0][1]) + '\\\\ \n'
     tex +='Actual $\circleddash$ &' + str(cm[1][0]) + '&' + str(cm[1][1]) + '&' + str(cm[1][0] + cm[1][1])+ '\\\\\hline \n'
     tex +=                      '&' + str(cm[0][0] + cm[1][0]) + '&'+ str(cm[0][1] + cm[1][1]) +  '&' +  str(cm[0][0] + cm[0][1] +  cm[1][0] + cm[1][1]) + '\n'
